@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="nl" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spank: De Ondeugende Club</title>
+    <!-- Premium Google Fonts imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;750;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              onyx: {
+                50: '#f5f5f5',
+                100: '#e9e9e9',
+                200: '#d1d1d1',
+                300: '#aeaeae',
+                400: '#868686',
+                500: '#646464',
+                600: '#4b4b4b',
+                700: '#373737',
+                800: '#222222',
+                900: '#141414',
+                950: '#07020a', // Rich obsidian purple-black
+              },
+              crimson: {
+                50: '#fff1f2',
+                150: '#ffccd3',
+                200: '#fca5a5',
+                400: '#f87171',
+                500: '#ef4444',
+                600: '#dc2626',
+                800: '#991b1b',
+                950: '#450a0a',
+              },
+              neon: {
+                pink: '#ff2a85',
+                purple: '#b829ff',
+                red: '#ff2d55',
+              }
+            },
+            fontFamily: {
+              sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+              serif: ['Playfair Display', 'Georgia', 'serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Smooth fade-in transitions */
+      .animate-fade-in {
+        animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      /* Glowing luxury highlights */
+      .glowing-border-pink:hover {
+        box-shadow: 0 0 20px rgba(255, 42, 133, 0.3);
+        border-color: rgba(255, 42, 133, 0.5);
+      }
+      
+      .glowing-border-crimson:hover {
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.35);
+        border-color: rgba(239, 68, 68, 0.6);
+      }
+
+      /* Premium leather texture look */
+      .leather-bg {
+        background: radial-gradient(circle at top left, #16081c 0%, #0a030d 100%);
+      }
+
+      /* Grid lace/mesh background layer */
+      .mesh-bg {
+        background-image: radial-gradient(rgba(255, 42, 133, 0.15) 1px, transparent 0), radial-gradient(rgba(184, 41, 255, 0.1) 1px, transparent 0);
+        background-size: 24px 24px;
+        background-position: 0 0, 12px 12px;
+      }
+    </style>
+  </head>
+  <body class="bg-onyx-950 text-[#fdedf2] font-sans min-h-screen relative overflow-x-hidden selection:bg-neon-pink selection:text-white pb-16">
+    <!-- Ambient Background Neon Glows -->
+    <div class="fixed inset-0 mesh-bg opacity-25 pointer-events-none z-0"></div>
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-neon-pink/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-10 right-1/4 w-[500px] h-[500px] bg-neon-purple/5 rounded-full blur-[180px] pointer-events-none z-0"></div>
+    
+    <!-- Exquisite Kinky Magazine Header -->
+    <header class="relative max-w-6xl mx-auto px-4 pt-8 pb-3 z-10">
+      <div class="flex flex-col items-center justify-center text-center space-y-2">
+        <!-- Badge bar -->
+        <div class="w-full flex justify-between items-center text-[10px] font-mono uppercase tracking-[0.25em] text-neon-pink/70 pb-3 border-b border-white/5">
+          <span class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-neon-pink animate-ping"></span>
+            L'Amour Secret
+          </span>
+          <span class="hidden sm:inline">Exclusieve Intieme Courant</span>
+          <span>Sleutel Nr. XII</span>
+        </div>
+
+        <!-- The Masthead Title with Kinky Neon Undertones -->
+        <h1 class="text-6xl md:text-8xl font-serif font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-neon-pink to-crimson-400 italic py-3 select-none filter drop-shadow-[0_0_15px_rgba(255,42,133,0.25)]">
+          Spank
+        </h1>
+        
+        <!-- Elegant Subtitle & Velvet Line Splitter -->
+        <div class="w-full py-3.5 border-t border-b border-neon-pink/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-rose-200/80 font-serif italic max-w-xl text-left leading-relaxed">
+            "Waar bewuste overgave, kinky verlangens en emotionele kwetsbaarheid elkaar ontmoeten in herwonnen passie."
+          </p>
+          
+          <!-- Category Filter Quick Selector (Keeps all visible instantly) -->
+          <div class="flex flex-wrap gap-1.5 bg-neutral-950/80 p-1 rounded-xl border border-neon-pink/15">
+            <button 
+              id="filter-all" 
+              onclick="filterArticles('all')"
+              class="px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase rounded-lg bg-neon-pink text-white transition-all duration-300"
+            >
+              Alles
+            </button>
+            <button 
+              id="filter-emotioneel" 
+              onclick="filterArticles('emotioneel')"
+              class="px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase rounded-lg text-rose-300/60 hover:text-white transition-all duration-300"
+            >
+              🫂 Intiem
+            </button>
+            <button 
+              id="filter-sensueel" 
+              onclick="filterArticles('sensueel')"
+              class="px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase rounded-lg text-rose-300/60 hover:text-white transition-all duration-300"
+            >
+              🔥 Sensueel
+            </button>
+            <button 
+              id="filter-kinky" 
+              onclick="filterArticles('kinky')"
+              class="px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase rounded-lg text-rose-300/60 hover:text-white transition-all duration-300"
+            >
+              🌶️ Kinky
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation & Bento Deck -->
+    <main class="max-w-6xl mx-auto px-4 mt-6 relative z-10">
+      
+      <!-- List View: Elegant Grid containing all cards, filtered seamlessly -->
+      <div id="overview-deck" class="animate-fade-in space-y-6">
+        
+        <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
+          
+          <!-- Article Box 1 - Oogcontact -->
+          <div 
+            id="card-oogcontact"
+            onclick="routeToArticle('oogcontact')"
+            class="group leather-bg border border-neon-pink/10 rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 glowing-border-pink cursor-pointer"
+          >
+            <!-- Photo container -->
+            <div class="h-48 overflow-hidden relative">
+              <img 
+                src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" 
+                alt="Mediterend Oogcontact" 
+                class="w-full h-full object-cover filter brightness-[0.75] contrast-[1.1] group-hover:scale-105 transition-all duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0a030d] via-transparent to-transparent"></div>
+              
+              <!-- Kinky Attribute Badges -->
+              <div class="absolute top-3 left-3 flex flex-col gap-1">
+                <span class="px-2.5 py-0.5 bg-black/80 text-neon-pink text-[8px] font-bold rounded-full uppercase tracking-wider font-mono border border-neon-pink/30">
+                  🫂 Intiem • Bindend
+                </span>
+              </div>
+              
+              <div class="absolute bottom-3 right-3 bg-neon-pink/20 hover:bg-neon-pink/40 border border-neon-pink/40 text-white rounded-full p-1.5 transition-colors">
+                <!-- Eye icon -->
+                <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 flex-1 flex flex-col justify-between bg-black/40">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-rose-300/40 mb-1.5">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-3 h-3 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    5 min
+                  </span>
+                  <span>Sensueel: 🔥</span>
+                </div>
+                
+                <h3 class="text-lg font-serif font-bold text-white italic leading-snug group-hover:text-neon-pink transition-colors duration-200">
+                  Synchrone Connectie: Ademhaling & Oogcontact
+                </h3>
+                
+                <p class="text-xs text-[#ebd8df]/70 mt-3.5 leading-relaxed font-light">
+                  Ontketen elkaars diepste wezen. Doorbreek dagelijkse hectiek met een kwetsbare, hypnotische oogcontactcirkel die jullie harten direct synchroniseert.
+                </p>
+              </div>
+
+              <!-- Action Link -->
+              <div class="mt-5 pt-3.5 border-t border-white/5 flex items-center justify-between text-[10px] font-bold text-neon-pink uppercase tracking-widest">
+                <span class="font-mono">Treed Binnen</span>
+                <svg class="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Article Box 2 - Sensate Focus -->
+          <div 
+            id="card-sensate-focus"
+            onclick="routeToArticle('sensate-focus')"
+            class="group leather-bg border border-neon-pink/10 rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 glowing-border-pink cursor-pointer"
+          >
+            <!-- Photo container -->
+            <div class="h-48 overflow-hidden relative">
+              <img 
+                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" 
+                alt="Zijdezachte Aanraking" 
+                class="w-full h-full object-cover filter brightness-[0.75] contrast-[1.1] group-hover:scale-105 transition-all duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0a030d] via-transparent to-transparent"></div>
+              
+              <!-- Kinky Attribute Badges -->
+              <div class="absolute top-3 left-3 flex flex-col gap-1">
+                <span class="px-2.5 py-0.5 bg-black/80 text-neon-purple text-[8px] font-bold rounded-full uppercase tracking-wider font-mono border border-neon-purple/30">
+                  🔥 Sensueel • Zonder druk
+                </span>
+              </div>
+              
+              <div class="absolute bottom-3 right-3 bg-neon-purple/20 hover:bg-neon-purple/40 border border-neon-purple/40 text-white rounded-full p-1.5 transition-colors">
+                <!-- Sparkles icon -->
+                <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 flex-1 flex flex-col justify-between bg-black/40">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-rose-300/40 mb-1.5">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-3 h-3 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    8 min
+                  </span>
+                  <span>Sensueel: 🔥🔥🔥</span>
+                </div>
+                
+                <h3 class="text-lg font-serif font-bold text-white italic leading-snug group-hover:text-neon-pink transition-colors duration-200">
+                  Sensate Focus: Herontdek Zintuiglijke Sensaties
+                </h3>
+                
+                <p class="text-xs text-[#ebd8df]/70 mt-3.5 leading-relaxed font-light">
+                  Haal de prestatiedruk uit bed. Leer elkaars lichaam herwaarderen met teder strelen waarbij geslachtsgemeenschap bewust verboden is.
+                </p>
+              </div>
+
+              <!-- Action Link -->
+              <div class="mt-5 pt-3.5 border-t border-white/5 flex items-center justify-between text-[10px] font-bold text-neon-pink uppercase tracking-widest">
+                <span class="font-mono">Treed Binnen</span>
+                <svg class="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Article Box 3 - 3-Minuten Regel -->
+          <div 
+            id="card-3-minuten-regel"
+            onclick="routeToArticle('3-minuten-regel')"
+            class="group leather-bg border border-crimson-500/10 rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 glowing-border-crimson cursor-pointer"
+          >
+            <!-- Photo container -->
+            <div class="h-48 overflow-hidden relative">
+              <img 
+                src="https://www.matriarchmatch.com/_astro/femdom-house-cleaning.DDFTKihW.jpeg" 
+                alt="Blinddoek Overgave" 
+                class="w-full h-full object-cover filter brightness-[0.75] contrast-[1.2] group-hover:scale-105 transition-all duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0a030d] via-transparent to-transparent"></div>
+              
+              <!-- Kinky Attribute Badges -->
+              <div class="absolute top-3 left-3 flex flex-col gap-1">
+                <span class="px-2.5 py-0.5 bg-black/80 text-neon-red text-[8px] font-bold rounded-full uppercase tracking-wider font-mono border border-neon-red/30">
+                  🌶️ Kinky • Overgave
+                </span>
+              </div>
+              
+              <div class="absolute bottom-3 right-3 bg-crimson-600/20 hover:bg-crimson-600/40 border border-crimson-600/40 text-white rounded-full p-1.5 transition-colors">
+                <!-- Key/Lock icon -->
+                <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 flex-1 flex flex-col justify-between bg-black/40">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-rose-300/40 mb-1.5">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-3 h-3 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    10 min
+                  </span>
+                  <span>Sensueel: 🔥🔥🔥🔥</span>
+                </div>
+                
+                <h3 class="text-lg font-serif font-bold text-white italic leading-snug group-hover:text-neon-red transition-colors duration-200">
+                  Leefregels kunnen je relatie redden
+                </h3>
+                
+                <p class="text-xs text-[#ebd8df]/70 mt-3.5 leading-relaxed font-light">
+                  Leeftegels hoeft niet enkel voor je kind te zijn. voor je man kan je ook leefregels hebben. Sterker nog onderzoek weist uit dat een relatie waar de man 24/7 duidelijke leefregels heeft dit ook helpt voor een betere relatie
+                </p>
+              </div>
+
+              <!-- Action Link -->
+              <div class="mt-5 pt-3.5 border-t border-white/5 flex items-center justify-between text-[10px] font-bold text-neon-red uppercase tracking-widest">
+                <span class="font-mono">Ontgrendel</span>
+                <svg class="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform text-neon-red" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Article Box 4 - Intieme Gesprekken -->
+          <div 
+            id="card-intieme-gesprekken"
+            onclick="routeToArticle('intieme-gesprekken')"
+            class="group leather-bg border border-neon-pink/10 rounded-3xl overflow-hidden flex flex-col justify-between transition-all duration-300 glowing-border-pink cursor-pointer"
+          >
+            <!-- Photo container -->
+            <div class="h-48 overflow-hidden relative">
+              <img 
+                src="https://bdsmdaan.be/bdsm_bondage/02_bondage_blinddoek/08_blinddoek_onzeker/bdsm_blinddoek_onzeker_14.jpg" 
+                alt="Intieme Gespreksstarters" 
+                class="w-full h-full object-cover filter brightness-[0.75] contrast-[1.1] group-hover:scale-105 transition-all duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0a030d] via-transparent to-transparent"></div>
+              
+              <!-- Kinky Attribute Badges -->
+              <div class="absolute top-3 left-3 flex flex-col gap-1">
+                <span class="px-2.5 py-0.5 bg-black/80 text-neon-pink text-[8px] font-bold rounded-full uppercase tracking-wider font-mono border border-neon-pink/30">
+                  🫂 Intiem • Geestelijk voorspel
+                </span>
+              </div>
+              
+              <div class="absolute bottom-3 right-3 bg-neon-pink/20 hover:bg-neon-pink/40 border border-neon-pink/40 text-white rounded-full p-1.5 transition-colors">
+                <!-- Chat bubble icon -->
+                <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 flex-1 flex flex-col justify-between bg-black/40">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-rose-300/40 mb-1.5">
+                  <span class="flex items-center gap-1">
+                    <svg class="w-3 h-3 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    6 min
+                  </span>
+                  <span>Sensueel: 🔥🔥</span>
+                </div>
+                
+                <h3 class="text-lg font-serif font-bold text-white italic leading-snug group-hover:text-neon-pink transition-colors duration-200">
+                  Communicatie als Voorspel: Gespreksstarters
+                </h3>
+                
+                <p class="text-xs text-[#ebd8df]/70 mt-3.5 leading-relaxed font-light">
+                  Prikkel elkaars brein. Breek onbevangen door onuitgesproken fantasieën en verlangens met onze prikkelende dialooggids.
+                </p>
+              </div>
+
+              <!-- Action Link -->
+              <div class="mt-5 pt-3.5 border-t border-white/5 flex items-center justify-between text-[10px] font-bold text-neon-pink uppercase tracking-widest">
+                <span class="font-mono">Treed Binnen</span>
+                <svg class="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PLAYFUL EXTRA: Interactive Safe Word & Boundary Matcher -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mt-8">
+          <div class="lg:col-span-7 bg-neutral-950/80 border border-neon-pink/20 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-neon-pink/5 rounded-full blur-[40px] pointer-events-none"></div>
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-crimson-950 border border-crimson-600/30 text-neon-red text-[9px] font-mono uppercase tracking-widest mb-3">
+                <svg class="w-3 h-3 text-neon-red animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
+                Interactieve Kinky Tool
+              </div>
+              <h4 class="text-xl font-serif font-bold italic text-white mb-2">Spanks Safeword Simulator</h4>
+              <p class="text-xs text-[#ebd8df]/70 leading-relaxed mb-4 max-w-xl">
+                Oefen het cruciale drie-kleurensysteem van de 3-Minuten Regel. Klik op de knoppen om te horen en zien welk gevoel en actie bij de signalen horen om blindelings vertrouwen te smeden.
+              </p>
+              
+              <!-- Safe word Interactive Buttons -->
+              <div class="grid grid-cols-3 gap-3 mb-4">
+                <button 
+                  onclick="triggerSafeword('groen')"
+                  class="bg-emerald-950/40 hover:bg-emerald-900/40 border border-emerald-500/30 hover:border-emerald-500/60 rounded-xl p-3 text-center transition-all cursor-pointer group"
+                >
+                  <span class="block text-xs font-bold text-emerald-400 uppercase tracking-widest">GERUST (GROEN)</span>
+                  <span class="block text-[10px] text-emerald-300/40 mt-1">"Vlieg vrijuit"</span>
+                </button>
+                <button 
+                  onclick="triggerSafeword('oranje')"
+                  class="bg-amber-950/40 hover:bg-amber-900/40 border border-amber-500/30 hover:border-amber-500/60 rounded-xl p-3 text-center transition-all cursor-pointer group"
+                >
+                  <span class="block text-xs font-bold text-amber-400 uppercase tracking-widest">MILDER (ORANJE)</span>
+                  <span class="block text-[10px] text-amber-300/40 mt-1">"Pas tempo aan"</span>
+                </button>
+                <button 
+                  onclick="triggerSafeword('rood')"
+                  class="bg-rose-950/40 hover:bg-rose-900/40 border border-rose-500/30 hover:border-rose-500/60 rounded-xl p-3 text-center transition-all cursor-pointer group"
+                >
+                  <span class="block text-xs font-bold text-neon-pink uppercase tracking-widest">STOP (ROOD)</span>
+                  <span class="block text-[10px] text-rose-300/40 mt-1">"Directe loslating"</span>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Dynamic interactive results -->
+            <div id="safeword-box" class="bg-black/80 rounded-2xl p-4 border border-white/5 text-xs text-center italic text-[#ebd8df]/50">
+              Klik op een signaal hierboven om te ervaren hoe jullie grenzen bewaken.
+            </div>
+          </div>
+
+          <!-- Kinky Boundaries Checklist -->
+          <div class="lg:col-span-5 bg-neutral-950/80 border border-neon-purple/20 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-neon-purple/5 rounded-full blur-[40px] pointer-events-none"></div>
+            <div>
+              <h4 class="text-sm font-mono uppercase tracking-widest text-[#ebd8df] font-bold mb-3 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-neon-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                Grenstest Snel-Check
+              </h4>
+              <p class="text-[11px] text-[#ebd8df]/60 mb-4 leading-relaxed">
+                Leg jullie telefoons naast elkaar en kruis om de beurt de verlangens aan die jullie intrigeren. Geen oordeel, puur speelsheid.
+              </p>
+              
+              <!-- Checklist Form items -->
+              <div class="space-y-2.5">
+                <label class="flex items-center gap-3 bg-black/60 p-2.5 rounded-xl border border-white/5 cursor-pointer hover:border-neon-purple/30 transition-all">
+                  <input type="checkbox" class="accent-neon-purple rounded h-4 w-4" onchange="updateChecklistCount()" />
+                  <span class="text-xs text-[#ebd8df]/85">Lichte Blinddoek & Tastprikkeling (Tastzin)</span>
+                </label>
+                <label class="flex items-center gap-3 bg-black/60 p-2.5 rounded-xl border border-white/5 cursor-pointer hover:border-neon-purple/30 transition-all">
+                  <input type="checkbox" class="accent-neon-purple rounded h-4 w-4" onchange="updateChecklistCount()" />
+                  <span class="text-xs text-[#ebd8df]/85">De 3-Minuten Regel (Lichte Overgave)</span>
+                </label>
+                <label class="flex items-center gap-3 bg-black/60 p-2.5 rounded-xl border border-white/5 cursor-pointer hover:border-neon-purple/30 transition-all">
+                  <input type="checkbox" class="accent-neon-purple rounded h-4 w-4" onchange="updateChecklistCount()" />
+                  <span class="text-xs text-[#ebd8df]/85">Sensate Focus (Stelen zonder Doel)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+              <span class="text-[10px] text-[#ebd8df]/40 font-mono" id="checklist-progress">0 van de 3 geselecteerd</span>
+              <button 
+                onclick="submitBoundariesChecklist()"
+                class="px-3.5 py-1.5 rounded-xl bg-neon-purple hover:bg-neon-purple/80 text-white text-[10px] uppercase font-bold tracking-widest transition-colors font-mono"
+              >
+                Match Samen!
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Detail View Area: splitscreen setup to allow lightning-fast switching across articles directly -->
+      <div id="detail-deck" class="hidden animate-fade-in space-y-4">
+        
+        <!-- Navigation Head Toolbar -->
+        <div class="flex items-center justify-between gap-4">
+          <button
+            onclick="routeToOverview()"
+            class="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-widest text-[#fdedf2] hover:text-white transition-all bg-neon-pink/10 hover:bg-neon-pink/20 px-4 py-2.5 rounded-xl border border-neon-pink/20 shadow-md cursor-pointer"
+          >
+            <!-- Left Arrow Icon -->
+            <svg class="w-4 h-4 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span>Terug naar Katern</span>
+          </button>
+          
+          <div class="text-[11px] font-mono text-neon-pink/60 hidden md:block tracking-widest">
+            Snel bladeren via het rechterpaneel ➔
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- LEFT / CORE COLUMN (8 cols): Large Magazine Article Content -->
+          <div class="lg:col-span-8 bg-neutral-950/90 border border-neon-pink/20 rounded-3xl p-6 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-neon-pink/5 rounded-full blur-[70px] pointer-events-none"></div>
+            
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-5 mb-6">
+              <div class="flex items-center gap-2.5">
+                <span id="detail-category" class="px-3 py-1 bg-neon-pink/20 text-neon-pink text-[10px] font-extrabold rounded-full border border-neon-pink/30 tracking-widest uppercase">Rubriek</span>
+                <span id="detail-time" class="text-rose-100/45 text-[10px] font-bold uppercase tracking-widest font-mono">5 min leestijd</span>
+              </div>
+              <button
+                onclick="copyShareLink()"
+                id="share-btn"
+                class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-neon-pink/10 hover:bg-neon-pink/25 border border-neon-pink/30 text-[10px] font-bold uppercase tracking-widest text-[#fdedf2] hover:text-white transition-all cursor-pointer"
+              >
+                <!-- Share Icon -->
+                <svg class="w-3.5 h-3.5 text-neon-pink" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                <span>Spoor Delen</span>
+              </button>
+            </div>
+
+            <!-- Big Active Illustration / Image Header -->
+            <div class="w-full h-64 md:h-80 rounded-2xl overflow-hidden mb-8 relative border border-white/5">
+              <img id="detail-hero-image" src="" alt="Artikel Sfeerbeeld" class="w-full h-full object-cover select-none pointer-events-none brightness-[0.75]" />
+              <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+              <!-- Article Title -->
+              <h2 id="detail-title" class="text-3xl md:text-5xl font-serif font-black text-white italic leading-tight mb-4"></h2>
+              
+              <!-- Quote / Intro -->
+              <p id="detail-intro" class="text-rose-200/90 italic text-base md:text-lg leading-relaxed mb-8 font-light border-l-2 border-neon-pink/40 pl-4"></p>
+              
+              <!-- Detailed body steps (compiled dyn) -->
+              <div id="detail-content" class="space-y-6 text-[#ebdcd0] text-[14px] md:text-base leading-relaxed mb-4"></div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN (4 cols): Quick Links Sidebar for lightning-fast switching -->
+          <div class="lg:col-span-4 space-y-4">
+            <div class="bg-neutral-950 border border-white/5 rounded-3xl p-6 shadow-xl space-y-4 relative overflow-hidden">
+              <div class="absolute top-0 right-0 w-24 h-24 bg-neon-pink/5 rounded-full blur-2xl pointer-events-none"></div>
+              
+              <div class="border-b border-white/5 pb-3">
+                <h4 class="text-xs font-mono uppercase tracking-widest text-[#ebd8df] font-bold flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                  Intieme Snelkoppelingen
+                </h4>
+                <p class="text-[10px] text-rose-300/40 mt-1 leading-tight">Navigeer direct van katern naar katern.</p>
+              </div>
+
+              <!-- Quick Links Container -->
+              <div class="space-y-3" id="quick-links-list">
+                <!-- Dynamically populated via JS to avoid duplication -->
+              </div>
+            </div>
+
+            <!-- Aesthetic metadata tag block -->
+            <div class="bg-gradient-to-br from-neutral-950 to-[#0e0413] border border-white/5 rounded-2xl p-5 text-xs text-rose-100/45 leading-normal space-y-2">
+              <h5 class="text-[10px] font-mono tracking-widest text-neon-pink uppercase font-semibold">Over Spank Courant</h5>
+              <p class="text-[11px] leading-relaxed">
+                Elk katern in deze intieme courant is samengesteld op basis van klinisch relatie-onderzoek, sekswerk-narratieven en zachte mindfulness-technieken. Veiligheid en respect vormen ons fundament.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Toast Notifications -->
+    <div id="toast" class="transition-all duration-300 transform translate-y-20 opacity-0 fixed bottom-6 right-6 z-50 bg-[#16001d] border border-neon-pink/30 rounded-xl px-5 py-3.5 shadow-2xl text-neon-pink flex items-center gap-3">
+      <!-- Checked Icon -->
+      <svg class="w-4 h-4 text-neon-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <span class="text-sm font-medium">Sleutelkopie succesvol naar klembord! 🔗</span>
+    </div>
+
+    <!-- Decorative Footer -->
+    <footer class="mt-14 border-t border-white/5 py-10 relative z-10 text-center">
+      <div class="max-w-md mx-auto px-4">
+        <!-- Heart alignment -->
+        <svg class="w-5 h-5 mx-auto mb-3 animate-pulse text-crimson-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <p class="text-sm font-serif font-medium text-neon-pink italic">Spank: Devotion & Passion</p>
+        <p class="text-xs text-rose-100/30 mt-1 leading-relaxed max-w-sm mx-auto">
+          Een romantische gids speciaal ontworpen om de emotionele en fysieke intimiteit te verrijken door mindfulness, veilige grenzen en oprechte openheid.
+        </p>
+        <p class="text-[9px] text-neon-pink/50 mt-5 font-mono tracking-widest uppercase">
+          Vrijheid in overgave • Veiligheid in verbinding • 100% Privacy-Assured
+        </p>
+      </div>
+    </footer>
+
+    <!-- App Scripts: Routes & Dynamic Rendering -->
+    <script>
+      // Beautiful curated photography suite for the news magazine
+      const ARTICLE_IMAGES = {
+        'oogcontact': 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80',
+        'sensate-focus': 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=700&q=80',
+        '3-minuten-regel': 'https://www.matriarchmatch.com/_astro/femdom-house-cleaning.DDFTKihW.jpeg',
+        'intieme-gesprekken': 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=80'
+      };
+
+      // Dataset incorporating all custom clinical write-ups
+      const ARTICLES = {
+        'oogcontact': {
+          title: "Synchrone Connectie: De Oogcontact & Ademhalingsmeditatie",
+          category: "Emotioneel & Intiem",
+          time: "5 min leestijd",
+          intro: "Keer samen terug naar de absolute basis van intimiteit door ademhaling en pure blik-connectie.",
+          content: `
+            <p>Soms verliezen we elkaar in de drukte van alledag. Zelfs als we naast elkaar op de bank zitten, zijn onze gedachten vaak overal behalve in het nu. Deze oefening, diep geworteld in de tantrische verbinding, brengt jullie zenuwstelsels op een natuurlijke manier synchroon.</p>
+            <p>Slechts een paar minuten onafgebroken oogcontact is een buitengewoon kwetsbare, intense en romantische ervaring. Zonder woorden spreek je uit: <em>"Ik ben er, ik zie je en ik mag er zijn met jou."</em></p>
+            
+            <div class="bg-neon-pink/10 border-l-2 border-neon-pink p-5 rounded-r-2xl my-6">
+              <h4 class="text-neon-pink font-bold uppercase tracking-wider text-xs mb-1">Neurologisch Feit</h4>
+              <p class="text-rose-100/60 text-xs italic">Uit medisch en psychologisch onderzoek blijkt dat langdurig onafgebroken oogcontact de afgifte van oxytocine (het hechtings- en knuffelhormoon) versterkt en ervoor zorgt dat de hartslagen en hersengolven van partners op elkaar gaan afstemmen.</p>
+            </div>
+
+            <h3 class="text-2xl font-serif font-extrabold text-neon-pink mt-8 mb-4 italic">De Stappen van Uitvoering</h3>
+            <ol class="space-y-4 pl-5 list-decimal marker:text-neon-pink marker:font-bold text-[#ebdcd0]">
+              <li><strong>Neem plaats recht tegenover elkaar:</strong> Zit comfortabel op een matras of brede bank in kleermakerszit, met jullie knieën elkaar net rakend.</li>
+              <li><strong>Sluit de ogen en harmoniseer:</strong> Sluit eerst samen de ogen en neem 3 rustige, trage ademteugen. Adem in door de neus en beëindig met een verzachtende zucht. Dit markeert de start van jullie veilige ruimte.</li>
+              <li><strong>Open jullie blik teder:</strong> Open jullie ogen rustig. Kijk elkaar comfortabel in de ogen. Tip: focus op slechts één oog van de ander (zoals het linkeroog) om een stabile, diepe blik te bewaren zonder onrust.</li>
+              <li><strong>Spreken is verboden:</strong> Communiceer niet met klanken of woorden. Laat eventuele opkomende emoties, verlegen blikken, of giechelbuien er simpelweg onvoorwaardelijk zijn.</li>
+              <li><strong>Adem samen door:</strong> Merk op hoe jullie ademhalingen langzaamaan in elkaar overvloeien. Houd deze intense intimiteitsvorm 5 minuten ononderbroken vol.</li>
+            </ol>
+          `
+        },
+        'sensate-focus': {
+          title: "Sensate Focus: Herontdek de Aanraking zonder Prestatiedruk",
+          category: "Sensueel & Verkennend",
+          time: "8 min leestijd",
+          intro: "Laat alle verwachtingen over seks of directe reactie los en focus puur op de zintuiglijke sensatie op de huid.",
+          content: `
+            <p>In onze hyperactieve maatschappij en de cultuur van snelle bevrediging is intimiteit weleens verworden tot een doelgericht spel: we strelen puur om opgewonden te raken, en bedrijven de liefde met een orgasme als obligatoire eindbestemming. Dit zorgt dikwijls voor onbewuste faalangst of prestatiedruk.</p>
+            <p>De gerenommeerde relatietechniek <strong>Sensate Focus</strong> herstelt de pure verbinding met je eigen zintuigen. Door de druk van 'moeten presteren' compleet uit te bannen, leer je lichte strelingen op de huid intenser ervaren en herwaardeer je de trage opbouw.</p>
+
+            <div class="bg-neon-purple/10 border-l-2 border-neon-purple p-5 rounded-r-2xl my-6">
+              <h4 class="text-neon-purple font-bold uppercase tracking-wider text-xs mb-1">De Gulden Regel:</h4>
+              <p class="text-rose-100/60 text-xs italic">Gedurende de gehele oefening zijn directe seksuele stimulatie, intiem geforceerd voorspel en geslachtsgemeenschap ten strengste verboden. Dit zorgt voor rust omdat het brein het sein ‘vrij van doelen’ doorkrijgt.</p>
+            </div>
+
+            <h3 class="text-2xl font-serif font-extrabold text-neon-purple mt-8 mb-4 italic">De Praktische Opzet</h3>
+            <ol class="space-y-4 pl-5 list-decimal marker:text-neon-purple marker:font-bold text-[#ebdcd0]">
+              <li><strong>Bereid een veilige haven voor:</strong> Zorg voor een behaaglijke kamertemperatuur, warm kaarslicht of dimlicht, en leg alle smartphones en afleidingen in een andere ruimte.</li>
+              <li><strong>Wijs rollen toe:</strong> Kies wie de <strong>Tederheidsgever</strong> is en wie de <strong>Ontvanger</strong>. De ontvanger ligt rustig neer en hoeft niets te doen dan alert de sensatie te ondergaan.</li>
+              <li><strong>Intuïtief strelen:</strong> De gever streelt zacht en kalm met vingertoppen, de handpalm of een zachte veer delen van het lichaam (uitgezonderd de geslachtsdelen). Ervaar de zachtheid en de warmte van de huid.</li>
+              <li><strong>Geef minimale richting:</strong> De ontvanger mag uiterst milde signalen afgeven (zoals 'iets rustiger' of 'hou hier even vast'), maar houdt gesprekken kort. Na 10 minuten wisselen de rollen.</li>
+            </ol>
+          `
+        },
+        '3-minuten-regel': {
+          title: "Leefregels kunnen je relatie redden",
+          category: "Speels & Kinky",
+          time: "10 min leestijd",
+          intro: "Goede regels maken een goede relatie",
+          content: `
+            <p>Veel mensen denken dat leefregels enkel nuttig is voor u kinderen</p>
+            <p>Amerikaans onderzoek heeft uitgewezen dat bij 95% van de koppels na het toepassen van leefregels de relatie erg verbeterd is. Dit omdat de man duidelijk weet wat van hem verwacht word. De vrouw ergert zich niet aan slechte gewoontes van de man maar straft hem hier gewoon voor.</p>
+
+            <div class="bg-crimson-950/40 border-l-2 border-crimson-500 p-5 rounded-r-2xl my-6">
+              <h4 class="text-neon-red font-bold uppercase tracking-wider text-xs mb-1">Straffen is minstens even belangrijk als de regel zelf</h4>
+              <p class="text-rose-100/60 text-xs italic">Door een angst te veroorzaken om regels te overtreden zorg je ervoor dat de man de leefregels zal volgen</p>
+            </div>
+
+            <div class="bg-crimson-950/40 border-l-2 border-crimson-500 p-5 rounded-r-2xl my-6">
+              <h4 class="text-neon-red font-bold uppercase tracking-wider text-xs mb-1">zorg voor een combinatie aan leefregels dat jij wilt en erotische leefregels</h4>
+              <p class="text-rose-100/60 text-xs italic">Door erotische leefregels aan de leefregels toe te voegen maak je het ook leuk voor je partner. Dus zal hij de leefregels niet zo snel willen stoppen</p>
+            </div>
+
+            <h3 class="text-2xl font-serif font-extrabold text-neon-red mt-8 mb-4 italic">Enkele leefregels</h3>
+            <ul class="space-y-4 pl-5 list-disc marker:text-neon-red text-[#ebdcd0]">
+            <p><strong>Huishoudelijke regels</strong></p>
+              <li>De man zal X aantal huihoudenlijke taken uitvoeren.</li>
+              <li>De man zal de dame niet tegenspreken. </li>
+              <li>De man zal niet vloeken </li>
+              <li>de man zal een onberispelijke hygiene hebben (tanden 3 keer per dag poetsen, scheren zonder haren na te laten, 4 keer per week douchen ...)</li>
+              <li>De man zal de dame niet controleren, meekijken op haar scherm of vragen wat ze doet om haar te controleren </li>
+            <p><strong>Geld besparende leefregels</strong></p>
+              <li>De man de gedragen ondergoed van de dame dragen. (Dit bespaart gemisseld €70,- op jaar basis aan aankoop en was)</li>
+              <li>De man zal 24/7 een kuisheidskooi dragen. (Dit bespaart gemisseld €30,- op jaar basis aan was)</li>
+              <li>De dame zal de man wassen met koud water terwijl hij vastgebonden is (Dit bespaart gemisseld €110,- op jaar basis aan electrisiteit en water) </li>
+            <p><strong>vernederende regels</strong></p>
+              <li>De dame heeft het recht te tonen aan anderen dat haar man getraint is (doe dit ook minimaal 1 keer per maand dit maakt het voor hem spannend)</li>
+              <li>alle huihoudelijke taken worden in enkel een kleine short of in een frensh maid costum uitgevoerd</li>
+              <li>De man mag enkel naar de wc met toestemming van de dame</li>
+              <li>al het geld van de man is eigendom van de dame de man krijgt leefgeld (2 euro per week)</li>
+              <li>De dame heeft het recht erotische berichten en foto's te sturen met andere mannen (deel screenprints hiervan om je partner een onderdanig gevoel te geven)</li>
+              <li>De dame heeft het recht Seksueel contact te hebben met wie ze maar wilt op voorwaarde dat ze dit telkens deelt met haar man op de afgesproken weize (dat jij als dame seks hebt met andere mannen en dit openlijk deelt met je man en je man niet mag met andere dames spreken zal bij 84% van de mannen een opwindend gevoel geven)</li>
+            <p><strong>Kinky regels</strong></p>
+              <li>De man zal zichzelf op een afgesproken dag 1 keer per week vastbinden voor een strafsessie. De dame kiest als ze hem losmaakt of niet voor het slapen</li>
+              <li>Tijdens de huishoudelijke taken zal de man een pijnspeeltje naar keuze van de dame aan of in hebben (anaal plug, Tepelklemmen, electro schok ...)deze mag pas uit als alle taken uitgevoerd zijn en indien mogelijk gecontroleerd</li>
+              <li>De man zal de dame aanspreken met meesteres en de seksdate van de dame met meester</li>
+              <li>De man mag niets weigeren</li>
+              <li>De dame zal de man dagelijks een kinky opdracht geven dat de man moet uitvoeren</li>
+            <p><strong>Romantiesche regels</strong></p>
+              <li><De man zal de dame elke dag mogelijk een massage geven van minimaal 5 minuten/li>
+              <li>De man zal minimaal 1 cadeau per maand kopen voor de dame</li>
+              <li>Bij seks moet de man de dame altijd eerst laten klaarkomen</li>
+              <li>De man zal de dame laten klaarkomen telkens zij zijn hand op de vagina van haar legt (maak hier op verschillende plaatsen gebruik van zoals in een bos of cinema)</li>
+            <p></p>
+            <p>Dit zijn zijn de leefregels die in het onderzoek vaak terug kwalen. denk eraan al ideeën voor straffen voorbereid te hebben probeer te zorgen dat je niet telkens de zelfde straf geeft dat je man niet kan berekenen als hij het waard vind op dit moment. Die ervoor zorgen dat de man liever de regel volgt als deze regel te risceren overtreden</p>
+            <p></p>
+            <p>Hang de leefregels op een zichtbare plaats uit dat hij hieraan herinnert word</p>
+              </ul>
+          `
+        },
+        'intieme-gesprekken': {
+          title: "Communicatie als Voorspel: Intieme Gespreksstarters",
+          category: "Spel & Dialoog",
+          time: "6 min leestijd",
+          intro: "Het onbeschaamd bespreken van taboes, herinneringen en verlangens initieert connectie nog voor de fysieke aanraking begint.",
+          content: `
+            <p>Woorden zijn misschien wel de allersterkste afrodisiaca die er bestaan. Wanneer hebben jullie voor het laatst écht openhartig gesproken over jullie intieme dromen, vroegere spanningen of de wijze waarop jullie opgewonden willen worden?</p>
+            <p>Intieme gespreksstarters verlagen die drempel op een speelse wijze. Door elkaar nieuwsgierige en prikkelende vragen te stellen, valt de druk weg en ontstaat er ruimte voor oprechte intimiteit.</p>
+
+            <div class="bg-[#24062a] border border-neon-pink/20 p-5 rounded-2xl my-6 flex gap-3">
+              <svg class="w-5 h-5 text-neon-pink shrink-0 mt-0.5 animate-pulse" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+              <div>
+                <h4 class="text-white font-bold text-sm mb-1">De Gouden Regel voor Dialoog:</h4>
+                <p class="text-rose-100/60 text-xs leading-relaxed">
+                  Luister zonder direct oordeel. Reageer nooit onmiddellijk met afwijzing, maar stel diepgaande open vervolgvragen zoals: <em>"Wat zorgt ervoor dat dit scenario je zo intrigeert?"</em> of <em>"Hoe kunnen we dit samen teder vormgeven?"</em>
+                </p>
+              </div>
+            </div>
+
+            <h3 class="text-2xl font-serif font-extrabold text-neon-pink mt-8 mb-4 italic">Interessante Vragentips om Nu te Stellen</h3>
+            <ul class="space-y-4 pl-5 list-disc marker:text-neon-pink text-[#ebdcd0]">
+              <li>"Op welk moment van de week voel jij je het meest verbonden of intiem met mij?"</li>
+              <li>"Als we één ding op seksueel of kinky gebied mochten proberen waarvan je denkt dat ik het misschien spannend vind, wat zou dat zijn?"</li>
+              <li>"Welke niet-fysieke handeling of gebaar van mij geeft jou direct een diep gevoel van tederheid of opwinning?"</li>
+            </ul>
+          `
+        }
+      };
+
+      let activeArticleId = null;
+
+      // Filter articles interactively
+      function filterArticles(category) {
+        // Update selection UI buttons
+        const btnAll = document.getElementById('filter-all');
+        const btnEmotioneel = document.getElementById('filter-emotioneel');
+        const btnSensueel = document.getElementById('filter-sensueel');
+        const btnKinky = document.getElementById('filter-kinky');
+
+        [btnAll, btnEmotioneel, btnSensueel, btnKinky].forEach(b => {
+          b.classList.remove('bg-neon-pink', 'text-white');
+          b.classList.add('text-rose-300/60');
+        });
+
+        const activeBtn = document.getElementById('filter-' + category);
+        activeBtn.classList.add('bg-neon-pink', 'text-white');
+        activeBtn.classList.remove('text-rose-300/60');
+
+        // Filter cards visually using grid item opacity/hidden with gorgeous transitions
+        const cards = {
+          'oogcontact': document.getElementById('card-oogcontact'),
+          'sensate-focus': document.getElementById('card-sensate-focus'),
+          '3-minuten-regel': document.getElementById('card-3-minuten-regel'),
+          'intieme-gesprekken': document.getElementById('card-intieme-gesprekken')
+        };
+
+        Object.keys(cards).forEach(key => {
+          const item = cards[key];
+          if (!item) return;
+
+          let isVisible = false;
+          if (category === 'all') {
+            isVisible = true;
+          } else if (category === 'emotioneel' && key === 'oogcontact') {
+            isVisible = true;
+          } else if (category === 'sensueel' && key === 'sensate-focus') {
+            isVisible = true;
+          } else if (category === 'kinky' && key === '3-minuten-regel') {
+            isVisible = true;
+          } else if (category === 'emotioneel' && key === 'intieme-gesprekken') {
+            // "intieme-gesprekken" fits dialog/bonding category perfectly
+            isVisible = true;
+          }
+
+          if (isVisible) {
+            item.classList.remove('hidden');
+            item.classList.add('animate-fade-in');
+          } else {
+            item.classList.add('hidden');
+            item.classList.remove('animate-fade-in');
+          }
+        });
+      }
+
+      // Safeword simulator action triggers
+      function triggerSafeword(word) {
+        const box = document.getElementById('safeword-box');
+        if (word === 'groen') {
+          box.innerHTML = `<span class="text-emerald-400 font-bold block mb-1">GROEN GESIGNEERD:</span> "U gaat perfect en liefdevol door met de handeling. Uw partner geniet ten volste en voelt zich volkomen comfortabel."`;
+          box.className = "bg-emerald-950/20 rounded-2xl p-4 border border-emerald-500/30 text-xs text-center italic text-emerald-250 animate-fade-in";
+        } else if (word === 'oranje') {
+          box.innerHTML = `<span class="text-amber-400 font-bold block mb-1">ORANJE GESIGNEERD:</span> "Vertraag direct of maak de handeling zachter. Er is geen paniek, maar de grens van de huidige sensatie is bereikt. Pas tempo of intensiteit direct aan."`;
+          box.className = "bg-amber-950/20 rounded-2xl p-4 border border-amber-500/30 text-xs text-center italic text-amber-250 animate-fade-in";
+        } else if (word === 'rood') {
+          box.innerHTML = `<span class="text-neon-pink font-bold block mb-1">ROOD GESIGNEERD:</span> "STILSTAND. Stop direct met elke aanraking. Open de gordijnen of doe de lichten aan. Neem elkaar beet of sluit even kort om de zenuwen gerust te stellen."`;
+          box.className = "bg-rose-950/20 rounded-2xl p-4 border border-neon-pink/30 text-xs text-center italic text-rose-100 animate-fade-in";
+        }
+      }
+
+      // Boundaries checklist tally helper
+      function updateChecklistCount() {
+        const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+        const progress = document.getElementById('checklist-progress');
+        progress.innerText = `${checked.length} van de 3 geselecteerd`;
+      }
+
+      function submitBoundariesChecklist() {
+        const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+        alert(`Geweldig! Jullie hebben ${checked.length} verlangens gedeeld om te verkennen. Leg de focus op open communicatie en respecteer elkaars verlangens.`);
+      }
+
+      // Render custom side links for quick traversal
+      function renderQuickLinks() {
+        const container = document.getElementById('quick-links-list');
+        container.innerHTML = '';
+
+        Object.keys(ARTICLES).forEach(id => {
+          const art = ARTICLES[id];
+          const isActive = id === activeArticleId;
+          
+          const item = document.createElement('div');
+          item.className = `p-3 rounded-xl border transition-all cursor-pointer flex items-center gap-3 ${
+            isActive 
+              ? 'bg-neon-pink/15 border-neon-pink/40 shadow-[0_0_15px_rgba(255,42,133,0.15)]' 
+              : 'bg-black/40 hover:bg-neon-pink/5 border-white/5 hover:border-neon-pink/15'
+          }`;
+          
+          item.onclick = () => routeToArticle(id);
+
+          item.innerHTML = `
+            <img src="${ARTICLE_IMAGES[id]}" alt="${art.title}" class="w-12 h-12 rounded-lg object-cover flex-shrink-0 filter brightness-[0.7] contrast-[1.1]" />
+            <div class="flex-1 min-w-0">
+              <h5 class="text-xs font-serif font-bold italic text-white truncate">${art.title}</h5>
+              <div class="flex items-center gap-2 mt-0.5">
+                <span class="text-[8px] font-mono tracking-widest text-[#ebd8df] uppercase">${art.category.split(' & ')[0]}</span>
+                <span class="text-[8px] font-mono text-neon-pink font-semibold">${art.time}</span>
+              </div>
+            </div>
+          `;
+          container.appendChild(item);
+        });
+      }
+
+      function routeToArticle(id) {
+        const art = ARTICLES[id];
+        if (!art) return;
+
+        activeArticleId = id;
+
+        // Populate detail view dynamically
+        document.getElementById('detail-title').innerText = art.title;
+        document.getElementById('detail-category').innerText = art.category;
+        document.getElementById('detail-time').innerText = art.time;
+        document.getElementById('detail-intro').innerHTML = `"${art.intro}"`;
+        document.getElementById('detail-content').innerHTML = art.content;
+        
+        // Update hero photograph
+        document.getElementById('detail-hero-image').src = ARTICLE_IMAGES[id];
+
+        // Populate sidebar
+        renderQuickLinks();
+
+        // Swap visual views with slick fade-in
+        document.getElementById('overview-deck').classList.add('hidden');
+        document.getElementById('detail-deck').classList.remove('hidden');
+
+        // Smooth scroll to view beginning for outstanding user flow
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function routeToOverview() {
+        activeArticleId = null;
+        document.getElementById('overview-deck').classList.remove('hidden');
+        document.getElementById('detail-deck').classList.add('hidden');
+      }
+
+      function copyShareLink() {
+        const dummy = document.createElement('input');
+        const text = window.location.href.split('?')[0] + '?article=' + (activeArticleId || 'all');
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+
+        // Pop toast notifier
+        const toast = document.getElementById('toast');
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+
+      // Restore deep routing link mapping upon direct entrance
+      window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const artParam = params.get('article');
+        if (artParam && ARTICLES[artParam]) {
+          routeToArticle(artParam);
+        }
+      });
+    </script>
+  </body>
+</html>
