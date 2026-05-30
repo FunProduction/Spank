@@ -1,0 +1,8 @@
+{
+  "name": "Spark: Intimiteit & Connectie",
+  "description": "Een intieme, rustige en veilige gids voor koppels om dichter bij elkaar te komen door verbindingsoefeningen en verhalen.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
